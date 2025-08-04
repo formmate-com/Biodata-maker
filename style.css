@@ -138,7 +138,7 @@ textarea {
     right: 0;
     width: 35mm;
     height: 45mm;
-    border: 2px solid black;
+    border: 1px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
