@@ -192,6 +192,11 @@ textarea {
     display: block;
     margin-bottom: 5px;
 }
+#bio-data-output .signature {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align items to the right */
+}
 #bio-data-output .footer {
     display: flex;
     justify-content: space-between;
