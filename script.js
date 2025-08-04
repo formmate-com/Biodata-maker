@@ -1,77 +1,56 @@
-document.getElementById('biodataForm').addEventListener('submit', function(e) {
+function addEducation() {
+  const section = document.getElementById('educationSection');
+  const div = document.createElement('div');
+  div.className = 'edu-entry';
+  div.innerHTML = `
+    <label>Exam Name: <input type="text" name="exam[]" required /></label>
+    <label>Board/University: <input type="text" name="board[]" required /></label>
+    <label>Year: <input type="text" name="year[]" required /></label>
+    <label>Result: <input type="text" name="result[]" required /></label>
+  `;
+  section.appendChild(div);
+}
+
+document.getElementById('biodataForm').addEventListener('submit', function (e) {
   e.preventDefault();
+  const form = e.target;
+  const preview = document.getElementById('preview');
 
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  const name = document.getElementById('name').value;
-  const father = document.getElementById('father').value;
-  const dob = document.getElementById('dob').value;
-  const address = document.getElementById('address').value;
-  const caste = document.getElementById('caste').value;
-  const nationality = document.getElementById('nationality').value;
-  const sex = document.getElementById('sex').value;
-  const mobile = document.getElementById('mobile').value;
-  const email = document.getElementById('email').value;
-  const languages = document.getElementById('languages').value;
-  const place = document.getElementById('place').value;
-
-  const exam = document.getElementById('exam').value;
-  const board = document.getElementById('board').value;
-  const year = document.getElementById('year').value;
-  const marks = document.getElementById('marks').value;
-  const total = document.getElementById('total').value;
-  const percent = document.getElementById('percent').value;
-
-  const photo = document.getElementById('photo');
-
-  // Title
-  doc.setFontSize(18);
-  doc.text("BIO – DATA", 80, 20);
-
-  doc.setFontSize(12);
-  doc.text(`NAME: ${name}`, 20, 30);
-  doc.text(`EMAIL: ${email}`, 20, 38);
-  doc.text(`PHONE NO: ${mobile}`, 20, 46);
-
-  doc.setFont(undefined, 'bold');
-  doc.text("PERSONAL INFORMATION:", 20, 56);
-  doc.setFont(undefined, 'normal');
-
-  doc.text(`FATHER NAME: ${father}`, 20, 64);
-  doc.text(`DATE OF BIRTH: ${dob}`, 20, 72);
-  doc.text(`ADDRESS: ${address}`, 20, 80);
-  doc.text(`CASTE: ${caste}`, 20, 88);
-  doc.text(`NATIONALITY: ${nationality}`, 20, 96);
-  doc.text(`SEX: ${sex}`, 20, 104);
-  doc.text(`EMAIL ID: ${email}`, 20, 112);
-  doc.text(`LANGUAGES KNOWN: ${languages}`, 20, 120);
-
-  doc.setFont(undefined, 'bold');
-  doc.text("EDUCATIONAL QUALIFICATION:", 20, 130);
-  doc.setFont(undefined, 'normal');
-
-  doc.autoTable({
-    head: [["EXAM", "BOARD", "YEAR", "MARKS", "TOTAL", "%"]],
-    body: [[exam, board, year, marks, total, percent]],
-    startY: 135,
-    theme: 'grid',
-    styles: { fontSize: 10 }
-  });
-
-  doc.text("DECLARATION – I hereby declare that the above information is true.", 20, doc.lastAutoTable.finalY + 20);
-  doc.text(`DATE: ___________`, 20, doc.lastAutoTable.finalY + 30);
-  doc.text(`PLACE: ${place}`, 20, doc.lastAutoTable.finalY + 38);
-  doc.text("SIGNATURE: _______________", 120, doc.lastAutoTable.finalY + 38);
-
-  if (photo.files.length > 0) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      doc.addImage(e.target.result, 'JPEG', 160, 20, 30, 30);
-      doc.save("biodata.pdf");
-    };
-    reader.readAsDataURL(photo.files[0]);
-  } else {
-    doc.save("biodata.pdf");
+  const photoFile = form.photo.files[0];
+  let photoURL = '';
+  if (photoFile) {
+    photoURL = URL.createObjectURL(photoFile);
   }
+
+  let html = `<h2 style="text-align:center;">Biodata</h2>`;
+
+  html += `<p><strong>Name:</strong> ${form.name.value}</p>`;
+  html += `<p><strong>Father's Name:</strong> ${form.father.value}</p>`;
+  html += `<p><strong>Mother's Name:</strong> ${form.mother.value}</p>`;
+  html += `<p><strong>Date of Birth:</strong> ${form.dob.value}</p>`;
+  html += `<p><strong>Sex:</strong> ${form.sex.value}</p>`;
+  html += `<p><strong>Address:</strong> ${form.address.value}</p>`;
+  html += `<p><strong>Phone:</strong> ${form.phone.value}</p>`;
+  html += `<p><strong>Email:</strong> ${form.email.value}</p>`;
+  if (photoURL) {
+    html += `<p><strong>Photo:</strong><br/><img src="${photoURL}" width="120"/></p>`;
+  }
+
+  html += `<h3>Education Qualification</h3>`;
+  const exams = form.querySelectorAll('input[name="exam[]"]');
+  const boards = form.querySelectorAll('input[name="board[]"]');
+  const years = form.querySelectorAll('input[name="year[]"]');
+  const results = form.querySelectorAll('input[name="result[]"]');
+
+  html += `<table border="1" cellpadding="5" cellspacing="0"><tr><th>Exam</th><th>Board/University</th><th>Year</th><th>Result</th></tr>`;
+  for (let i = 0; i < exams.length; i++) {
+    html += `<tr><td>${exams[i].value}</td><td>${boards[i].value}</td><td>${years[i].value}</td><td>${results[i].value}</td></tr>`;
+  }
+  html += `</table>`;
+
+  if (form.extra.value) {
+    html += `<h3>Extra Qualification</h3><p>${form.extra.value}</p>`;
+  }
+
+  preview.innerHTML = html;
 });
