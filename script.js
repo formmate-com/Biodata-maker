@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // 1. Populate all text fields first
-            document.getElementById('output-name').innerText = capitalizeWords(document.getElementById('name').value);
+            document.getElementById('output-rajkumar-name').innerText = capitalizeWords(document.getElementById('name').value);
             document.getElementById('output-top-email').innerText = document.getElementById('email').value.toLowerCase();
             document.getElementById('output-top-phone').innerText = document.getElementById('mob-no').value;
             document.getElementById('output-name').innerText = capitalizeWords(document.getElementById('name').value);
@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('output-date').innerText = document.getElementById('date').value;
             document.getElementById('output-place').innerText = capitalizeWords(document.getElementById('place').value);
             
-            // Get value for Extra Qualification
             const extraQualification = document.getElementById('extra-qualification').value;
 
             // Handle education fields
@@ -73,53 +72,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Handle Extra Qualification Display
             const extraQualOutputSection = document.getElementById('extra-qual-output-section');
             if (extraQualification.trim() !== '') {
                 document.getElementById('output-extra-qualification').innerText = extraQualification;
-                extraQualOutputSection.style.display = 'block'; // Show the section
+                extraQualOutputSection.style.display = 'block';
             } else {
-                extraQualOutputSection.style.display = 'none'; // Hide if empty
+                extraQualOutputSection.style.display = 'none';
             }
 
-            // 2. Handle image loading very carefully
+            // 2. This is the MOST ROBUST way to load images before capture
             const loadImage = (file, imgElement) => {
                 return new Promise((resolve, reject) => {
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (e) => {
-                            imgElement.src = e.target.result;
-                            // IMPORTANT: Wait for the image to be fully decoded and rendered
-                            imgElement.decode().then(() => {
-                                resolve();
-                            }).catch(reject);
-                        };
-                        reader.onerror = (err) => reject("File reading error");
-                        reader.readAsDataURL(file);
-                    } else {
+                    if (!file) {
                         imgElement.src = '';
-                        resolve(); // Resolve immediately if no file
+                        return resolve();
                     }
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        imgElement.src = reader.result;
+                        // Use 'onload' for broad compatibility
+                        imgElement.onload = () => resolve();
+                        imgElement.onerror = () => reject(new Error('Image could not be loaded.'));
+                    };
+                    reader.onerror = () => reject(new Error('File could not be read.'));
+                    reader.readAsDataURL(file);
                 });
             };
             
             const photoInput = document.getElementById('photo');
             const signatureInput = document.getElementById('signature-upload');
             
-            // Wait for both images to be set and rendered
             await Promise.all([
                 loadImage(photoInput.files[0], document.getElementById('output-photo')),
                 loadImage(signatureInput.files[0], document.getElementById('output-signature-img'))
             ]);
 
+            // Small delay to ensure rendering is complete on all devices
+            await new Promise(resolve => setTimeout(resolve, 100));
+
             // 3. Generate PDF after everything is ready
             generatePdf();
 
         } catch (error) {
-            console.error("An error occurred during data processing or image loading:", error);
+            console.error("Error during data processing or image loading:", error);
             alert("Failed to process data or load images. Please try again with standard image files (JPG, PNG).");
         } finally {
-            // Re-enable button
             submitButton.textContent = 'Download PDF';
             submitButton.disabled = false;
         }
@@ -134,11 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const options = {
             scale: 2,
             useCORS: true,
-            allowTaint: true // May help with some image loading issues
+            allowTaint: true
         };
 
         html2canvas(bioDataOutput, options).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
+            const imgData = canvas.toDataURL('image/png', 1.0);
             const pdf = new jsPDF('p', 'mm', 'a4', true);
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = pdf.internal.pageSize.getHeight();
