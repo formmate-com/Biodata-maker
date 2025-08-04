@@ -1,72 +1,60 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f0f2f5;
+  background: #f4f4f4;
   padding: 20px;
 }
 
 .container {
+  background: #fff;
+  padding: 20px;
   max-width: 800px;
   margin: auto;
-  background: white;
-  padding: 30px;
-  border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-h1, h2 {
+h1 {
   text-align: center;
-  margin-bottom: 20px;
 }
 
-form label {
+form fieldset {
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  padding: 15px;
+}
+
+form legend {
+  font-weight: bold;
+}
+
+label {
   display: block;
   margin: 10px 0;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="date"],
-textarea,
-select {
+input, select, textarea, button {
   width: 100%;
   padding: 8px;
-  margin-top: 4px;
-  box-sizing: border-box;
+  margin-top: 5px;
 }
 
-fieldset {
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  padding: 15px;
-}
-
-button {
-  padding: 10px 20px;
-  margin-top: 15px;
-  cursor: pointer;
-}
-
-.edu {
+.edu-row {
   display: flex;
   gap: 10px;
   margin-bottom: 10px;
 }
 
-#previewContainer {
-  margin-top: 30px;
-  padding: 15px;
-  border: 1px solid #ddd;
+.edu-row input {
+  flex: 1;
 }
 
-#biodataPreview {
-  border: 1px solid #aaa;
-  padding: 20px;
-  min-height: 200px;
+button {
+  background: #007BFF;
+  color: #fff;
+  border: none;
+  margin-top: 10px;
+  cursor: pointer;
 }
 
-img.photo {
-  float: right;
-  max-width: 120px;
-  max-height: 140px;
-  border: 1px solid #333;
+button:hover {
+  background: #0056b3;
 }
