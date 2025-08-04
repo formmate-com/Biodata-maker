@@ -1,63 +1,66 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>বায়োডাটা মেকার</title>
+    <title>Bio-Data Maker</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="form-container">
-        <h1>বায়োডাটা তৈরির ফর্ম</h1>
-        <p>নিচের ফর্মটি পূরণ করে আপনার বায়োডাটা PDF ফরম্যাটে ডাউনলোড করুন।</p>
+        <h1>Bio-Data Generation Form</h1>
+        <p>Fill out the form below to download your bio-data in PDF format.</p>
         
         <form id="bio-data-form">
             <!-- Personal Information -->
-            <h2>ব্যক্তিগত তথ্য</h2>
+            <h2>Personal Information</h2>
             <div class="input-group">
-                <label for="photo">আপনার ছবি আপলোড করুন:</label>
+                <label for="photo">Upload Your Photo:</label>
                 <input type="file" id="photo" accept="image/*">
             </div>
-            <input type="text" id="name" placeholder="আপনার পুরো নাম" required>
-            <input type="text" id="father-name" placeholder="বাবার নাম" required>
-            <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="dob" placeholder="জন্ম তারিখ" required>
-            <textarea id="address" placeholder="বর্তমান ঠিকানা" required></textarea>
-            <input type="text" id="caste" placeholder="জাত (Caste)">
+            <input type="text" id="name" placeholder="Your Full Name" required>
+            <input type="text" id="father-name" placeholder="Father's Name" required>
+            <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="dob" placeholder="Date of Birth" required>
+            <textarea id="address" placeholder="Present Address" required></textarea>
+            <input type="text" id="caste" placeholder="Caste">
             <select id="sex" required>
-                <option value="" disabled selected>লিঙ্গ নির্বাচন করুন</option>
-                <option value="পুরুষ">পুরুষ</option>
-                <option value="মহিলা">মহিলা</option>
-                <option value="অন্যান্য">অন্যান্য</option>
+                <option value="" disabled selected>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
             </select>
-            <input type="tel" id="mob-no" placeholder="মোবাইল নম্বর" required>
-            <input type="email" id="email" placeholder="ইমেল আইডি" required>
-            <input type="text" id="languages" placeholder="ভাষাজ্ঞান (যেমন: বাংলা, ইংরেজি)">
+            <input type="tel" id="mob-no" placeholder="Mobile Number" required>
+            <input type="email" id="email" placeholder="Email ID" required>
+            <input type="text" id="languages" placeholder="Languages Known (e.g., English, Spanish)">
 
             <!-- Educational Qualification -->
-            <h2>শিক্ষাগত যোগ্যতা</h2>
+            <h2>Educational Qualification</h2>
             <div id="education-fields">
                 <div class="education-entry">
-                    <input type="text" class="exam-name" placeholder="পরীক্ষার নাম (যেমন: S.S.C)">
-                    <input type="text" class="board-name" placeholder="বোর্ডের নাম">
-                    <input type="text" class="passing-year" placeholder="পাশের বছর">
-                    <input type="number" class="marks-obtain" placeholder="প্রাপ্ত নম্বর">
-                    <input type="number" class="total-marks" placeholder="মোট নম্বর">
+                    <input type="text" class="exam-name" placeholder="Exam Name (e.g., High School)">
+                    <input type="text" class="board-name" placeholder="Name of Board">
+                    <input type="text" class="passing-year" placeholder="Passing Year">
+                    <input type="number" class="marks-obtain" placeholder="Marks Obtained">
+                    <input type="number" class="total-marks" placeholder="Total Marks">
                 </div>
             </div>
-            <button type="button" id="add-education" class="btn-secondary">আরও যোগ্যতা যোগ করুন</button>
+            <button type="button" id="add-education" class="btn-secondary">Add More Qualification</button>
 
-            <!-- Declaration -->
-            <h2>অন্যান্য তথ্য</h2>
-            <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" placeholder="তারিখ" required>
-            <input type="text" id="place" placeholder="স্থান" required>
+            <!-- Other Information -->
+            <h2>Other Information</h2>
+            <div class="input-group">
+                <label for="signature-upload">Upload Your Signature (Image):</label>
+                <input type="file" id="signature-upload" accept="image/*">
+            </div>
+            <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" placeholder="Date" required>
+            <input type="text" id="place" placeholder="Place" required>
 
-            <button type="submit" class="btn-primary">পিডিএফ ডাউনলোড করুন</button>
+            <button type="submit" class="btn-primary">Download PDF</button>
         </form>
     </div>
 
     <!-- This is the hidden div that will be converted to PDF -->
-    <!-- It is styled to look exactly like the image provided -->
     <div id="bio-data-output" class="hidden">
         <div class="header">
             <h1>BIO - DATA</h1>
@@ -68,7 +71,7 @@
             </div>
 
             <div class="info-section top-info">
-                 <p><strong>NAME:</strong> <span id="output-rajkumar-name"></span></p>
+                 <p><strong>RAJKUMAR GIRI</strong> <span id="output-rajkumar-name"></span></p>
                  <p><strong>EMAIL NO :</strong> <span id="output-top-email"></span></p>
                  <p><strong>Phone no -</strong> <span id="output-top-phone"></span></p>
             </div>
@@ -148,6 +151,7 @@
                     <p><strong>PLACE :</strong> <span id="output-place"></span></p>
                 </div>
                 <div class="signature">
+                    <img id="output-signature-img" src="" alt="User Signature">
                     <p><strong>SIGNATURE</strong></p>
                 </div>
             </div>
