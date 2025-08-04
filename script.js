@@ -1,15 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Function to capitalize the first letter of each word
+    function capitalizeWords(str) {
+        if (!str) return '';
+        // Handle emails carefully to avoid capitalizing after @
+        if (str.includes('@')) {
+            return str.toLowerCase();
+        }
+        return str.toLowerCase().split(' ').map(word => {
+            return word.charAt(0).toUpperCase() + word.slice(1);
+        }).join(' ');
+    }
+    
     // Add more education fields
     document.getElementById('add-education').addEventListener('click', () => {
         const educationFields = document.getElementById('education-fields');
         const newEntry = document.createElement('div');
         newEntry.classList.add('education-entry');
         newEntry.innerHTML = `
-            <input type="text" class="exam-name" placeholder="পরীক্ষার নাম">
-            <input type="text" class="board-name" placeholder="বোর্ডের নাম">
-            <input type="text" class="passing-year" placeholder="পাশের বছর">
-            <input type="number" class="marks-obtain" placeholder="প্রাপ্ত নম্বর">
-            <input type="number" class="total-marks" placeholder="মোট নম্বর">
+            <input type="text" class="exam-name" placeholder="Exam Name">
+            <input type="text" class="board-name" placeholder="Name of Board">
+            <input type="text" class="passing-year" placeholder="Passing Year">
+            <input type="number" class="marks-obtain" placeholder="Marks Obtained">
+            <input type="number" class="total-marks" placeholder="Total Marks">
         `;
         educationFields.appendChild(newEntry);
     });
@@ -18,18 +30,18 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (event) => {
         event.preventDefault();
 
-        // 1. Get all values from the form
-        const name = document.getElementById('name').value;
-        const fatherName = document.getElementById('father-name').value;
+        // 1. Get all values and capitalize them
+        const name = capitalizeWords(document.getElementById('name').value);
+        const fatherName = capitalizeWords(document.getElementById('father-name').value);
         const dob = document.getElementById('dob').value;
-        const address = document.getElementById('address').value;
-        const caste = document.getElementById('caste').value;
+        const address = capitalizeWords(document.getElementById('address').value);
+        const caste = capitalizeWords(document.getElementById('caste').value);
         const sex = document.getElementById('sex').value;
         const mobNo = document.getElementById('mob-no').value;
-        const email = document.getElementById('email').value;
-        const languages = document.getElementById('languages').value;
+        const email = document.getElementById('email').value.toLowerCase(); // Emails should be lowercase
+        const languages = capitalizeWords(document.getElementById('languages').value);
         const date = document.getElementById('date').value;
-        const place = document.getElementById('place').value;
+        const place = capitalizeWords(document.getElementById('place').value);
         
         // 2. Populate the hidden output div
         document.getElementById('output-rajkumar-name').innerText = name;
@@ -53,8 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
         educationBody.innerHTML = ''; // Clear previous entries
         const educationEntries = document.querySelectorAll('.education-entry');
         educationEntries.forEach(entry => {
-            const examName = entry.querySelector('.exam-name').value;
-            const boardName = entry.querySelector('.board-name').value;
+            const examName = capitalizeWords(entry.querySelector('.exam-name').value);
+            const boardName = capitalizeWords(entry.querySelector('.board-name').value);
             const passingYear = entry.querySelector('.passing-year').value;
             const marksObtain = parseFloat(entry.querySelector('.marks-obtain').value) || 0;
             const totalMarks = parseFloat(entry.querySelector('.total-marks').value) || 0;
@@ -74,30 +86,43 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Handle photo upload
+        // Handle image uploads using Promises to ensure they load before PDF generation
         const photoInput = document.getElementById('photo');
-        const outputPhoto = document.getElementById('output-photo');
-        if (photoInput.files && photoInput.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                outputPhoto.src = e.target.result;
-                generatePdf(); // Generate PDF after image is loaded
-            }
-            reader.readAsDataURL(photoInput.files[0]);
-        } else {
-            outputPhoto.src = ''; // Clear if no photo
-            generatePdf(); // Generate PDF without a photo
-        }
+        const signatureInput = document.getElementById('signature-upload');
+        
+        const loadImage = (file, imgElement) => {
+            return new Promise((resolve) => {
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        imgElement.src = e.target.result;
+                        // Wait for the image to be fully rendered in the DOM
+                        imgElement.onload = () => resolve();
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    imgElement.src = '';
+                    resolve(); // Resolve immediately if no file
+                }
+            });
+        };
+        
+        const photoPromise = loadImage(photoInput.files[0], document.getElementById('output-photo'));
+        const signaturePromise = loadImage(signatureInput.files[0], document.getElementById('output-signature-img'));
+
+        // Wait for both images to be loaded before generating the PDF
+        Promise.all([photoPromise, signaturePromise]).then(() => {
+            generatePdf();
+        });
     });
 
     function generatePdf() {
         const { jsPDF } = window.jspdf;
         const bioDataOutput = document.getElementById('bio-data-output');
         
-        // Temporarily make the hidden div visible for capturing
         bioDataOutput.classList.remove('hidden');
         
-        html2canvas(bioDataOutput, { scale: 2 }).then(canvas => {
+        html2canvas(bioDataOutput, { scale: 3, useCORS: true }).then(canvas => {
             const imgData = canvas.toDataURL('image/png');
             const pdf = new jsPDF('p', 'mm', 'a4');
             const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -106,12 +131,10 @@ document.addEventListener('DOMContentLoaded', () => {
             pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
             pdf.save("Bio-Data.pdf");
             
-            // Hide the div again after capturing
             bioDataOutput.classList.add('hidden');
         }).catch(err => {
             console.error("Error generating PDF:", err);
-            // Ensure the div is hidden even if there's an error
-             bioDataOutput.classList.add('hidden');
+            bioDataOutput.classList.add('hidden');
         });
     }
 });
