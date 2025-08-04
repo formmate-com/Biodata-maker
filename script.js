@@ -1,56 +1,85 @@
+let uploadedImage = null;
+
 function addEducation() {
-  const section = document.getElementById('educationSection');
-  const div = document.createElement('div');
-  div.className = 'edu-entry';
+  const container = document.getElementById("educationContainer");
+  const div = document.createElement("div");
+  div.className = "edu";
   div.innerHTML = `
-    <label>Exam Name: <input type="text" name="exam[]" required /></label>
-    <label>Board/University: <input type="text" name="board[]" required /></label>
-    <label>Year: <input type="text" name="year[]" required /></label>
-    <label>Result: <input type="text" name="result[]" required /></label>
+    <input type="text" placeholder="Exam" class="exam"/>
+    <input type="text" placeholder="Board/University" class="board"/>
+    <input type="text" placeholder="Year" class="year"/>
+    <input type="text" placeholder="Marks (%)" class="marks"/>
   `;
-  section.appendChild(div);
+  container.appendChild(div);
 }
 
-document.getElementById('biodataForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-  const form = e.target;
-  const preview = document.getElementById('preview');
-
-  const photoFile = form.photo.files[0];
-  let photoURL = '';
-  if (photoFile) {
-    photoURL = URL.createObjectURL(photoFile);
-  }
-
-  let html = `<h2 style="text-align:center;">Biodata</h2>`;
-
-  html += `<p><strong>Name:</strong> ${form.name.value}</p>`;
-  html += `<p><strong>Father's Name:</strong> ${form.father.value}</p>`;
-  html += `<p><strong>Mother's Name:</strong> ${form.mother.value}</p>`;
-  html += `<p><strong>Date of Birth:</strong> ${form.dob.value}</p>`;
-  html += `<p><strong>Sex:</strong> ${form.sex.value}</p>`;
-  html += `<p><strong>Address:</strong> ${form.address.value}</p>`;
-  html += `<p><strong>Phone:</strong> ${form.phone.value}</p>`;
-  html += `<p><strong>Email:</strong> ${form.email.value}</p>`;
-  if (photoURL) {
-    html += `<p><strong>Photo:</strong><br/><img src="${photoURL}" width="120"/></p>`;
-  }
-
-  html += `<h3>Education Qualification</h3>`;
-  const exams = form.querySelectorAll('input[name="exam[]"]');
-  const boards = form.querySelectorAll('input[name="board[]"]');
-  const years = form.querySelectorAll('input[name="year[]"]');
-  const results = form.querySelectorAll('input[name="result[]"]');
-
-  html += `<table border="1" cellpadding="5" cellspacing="0"><tr><th>Exam</th><th>Board/University</th><th>Year</th><th>Result</th></tr>`;
-  for (let i = 0; i < exams.length; i++) {
-    html += `<tr><td>${exams[i].value}</td><td>${boards[i].value}</td><td>${years[i].value}</td><td>${results[i].value}</td></tr>`;
-  }
-  html += `</table>`;
-
-  if (form.extra.value) {
-    html += `<h3>Extra Qualification</h3><p>${form.extra.value}</p>`;
-  }
-
-  preview.innerHTML = html;
+document.getElementById("photo").addEventListener("change", function (e) {
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    uploadedImage = event.target.result;
+  };
+  reader.readAsDataURL(e.target.files[0]);
 });
+
+function generateBiodata() {
+  const fullName = document.getElementById("fullName").value;
+  const fatherName = document.getElementById("fatherName").value;
+  const motherName = document.getElementById("motherName").value;
+  const sex = document.getElementById("sex").value;
+  const dob = document.getElementById("dob").value;
+  const mobile = document.getElementById("mobile").value;
+  const email = document.getElementById("email").value;
+  const address = document.getElementById("address").value;
+  const extra = document.getElementById("extraQualification").value;
+
+  const exams = document.querySelectorAll(".exam");
+  const boards = document.querySelectorAll(".board");
+  const years = document.querySelectorAll(".year");
+  const marks = document.querySelectorAll(".marks");
+
+  let eduHTML = "<ul>";
+  for (let i = 0; i < exams.length; i++) {
+    eduHTML += `<li>${exams[i].value} | ${boards[i].value} | ${years[i].value} | ${marks[i].value}%</li>`;
+  }
+  eduHTML += "</ul>";
+
+  const preview = `
+    <div>
+      <h2 style="text-align:center;">BIODATA</h2>
+      <div>
+        <strong>Name:</strong> ${fullName}<br/>
+        <strong>Father's Name:</strong> ${fatherName}<br/>
+        <strong>Mother's Name:</strong> ${motherName}<br/>
+        <strong>Sex:</strong> ${sex}<br/>
+        <strong>Date of Birth:</strong> ${dob}<br/>
+        <strong>Mobile:</strong> ${mobile}<br/>
+        <strong>Email:</strong> ${email}<br/>
+        <strong>Address:</strong> ${address}<br/>
+        ${uploadedImage ? `<img src="${uploadedImage}" class="photo"/>` : ""}
+      </div>
+      <hr/>
+      <h3>Education Qualification:</h3>
+      ${eduHTML}
+      <h3>Extra Qualification:</h3>
+      <p>${extra}</p>
+    </div>
+  `;
+
+  document.getElementById("biodataPreview").innerHTML = preview;
+}
+
+function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const content = document.getElementById("biodataPreview");
+
+  doc.html(content, {
+    callback: function (doc) {
+      doc.save("biodata.pdf");
+    },
+    x: 10,
+    y: 10,
+    html2canvas: { scale: 0.5 },
+  });
+}
