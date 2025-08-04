@@ -202,3 +202,8 @@ textarea {
     justify-content: space-between;
     margin-top: 50px;
 }
+
+/* Styling for the Extra Qualification section in the output */
+#bio-data-output .extra-qualification-info {
+    margin-top: 25px; /* Adds space above the section */
+}
