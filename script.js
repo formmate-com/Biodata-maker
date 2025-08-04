@@ -50,6 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('output-languages').innerText = capitalizeWords(document.getElementById('languages').value);
             document.getElementById('output-date').innerText = document.getElementById('date').value;
             document.getElementById('output-place').innerText = capitalizeWords(document.getElementById('place').value);
+            
+            // Get value for Extra Qualification
+            const extraQualification = document.getElementById('extra-qualification').value;
 
             // Handle education fields
             const educationBody = document.getElementById('output-education-body');
@@ -69,6 +72,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     educationBody.appendChild(row);
                 }
             });
+
+            // Handle Extra Qualification Display
+            const extraQualOutputSection = document.getElementById('extra-qual-output-section');
+            if (extraQualification.trim() !== '') {
+                document.getElementById('output-extra-qualification').innerText = extraQualification;
+                extraQualOutputSection.style.display = 'block'; // Show the section
+            } else {
+                extraQualOutputSection.style.display = 'none'; // Hide if empty
+            }
 
             // 2. Handle image loading very carefully
             const loadImage = (file, imgElement) => {
