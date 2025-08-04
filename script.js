@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // 1. Populate all text fields first
-            document.getElementById('output-rajkumar-name').innerText = capitalizeWords(document.getElementById('name').value);
+            document.getElementById('output-name').innerText = capitalizeWords(document.getElementById('name').value);
             document.getElementById('output-top-email').innerText = document.getElementById('email').value.toLowerCase();
             document.getElementById('output-top-phone').innerText = document.getElementById('mob-no').value;
             document.getElementById('output-name').innerText = capitalizeWords(document.getElementById('name').value);
