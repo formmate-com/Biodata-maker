@@ -1,71 +1,163 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <title>Biodata Maker</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 800px;
-      margin: auto;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-    }
-    #photo-preview {
-      width: 100px;
-      height: 120px;
-      object-fit: cover;
-      margin-top: 10px;
-    }
-    #download-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বায়োডাটা মেকার</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>Biodata Maker</h2>
-  
-  <label>Full Name:</label>
-  <input type="text" id="name">
 
-  <label>Father's Name:</label>
-  <input type="text" id="father">
+    <div class="form-container">
+        <h1>বায়োডাটা তৈরির ফর্ম</h1>
+        <p>নিচের ফর্মটি পূরণ করে আপনার বায়োডাটা PDF ফরম্যাটে ডাউনলোড করুন।</p>
+        
+        <form id="bio-data-form">
+            <!-- Personal Information -->
+            <h2>ব্যক্তিগত তথ্য</h2>
+            <div class="input-group">
+                <label for="photo">আপনার ছবি আপলোড করুন:</label>
+                <input type="file" id="photo" accept="image/*">
+            </div>
+            <input type="text" id="name" placeholder="আপনার পুরো নাম" required>
+            <input type="text" id="father-name" placeholder="বাবার নাম" required>
+            <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="dob" placeholder="জন্ম তারিখ" required>
+            <textarea id="address" placeholder="বর্তমান ঠিকানা" required></textarea>
+            <input type="text" id="caste" placeholder="জাত (Caste)">
+            <select id="sex" required>
+                <option value="" disabled selected>লিঙ্গ নির্বাচন করুন</option>
+                <option value="পুরুষ">পুরুষ</option>
+                <option value="মহিলা">মহিলা</option>
+                <option value="অন্যান্য">অন্যান্য</option>
+            </select>
+            <input type="tel" id="mob-no" placeholder="মোবাইল নম্বর" required>
+            <input type="email" id="email" placeholder="ইমেল আইডি" required>
+            <input type="text" id="languages" placeholder="ভাষাজ্ঞান (যেমন: বাংলা, ইংরেজি)">
 
-  <label>Date of Birth:</label>
-  <input type="date" id="dob">
+            <!-- Educational Qualification -->
+            <h2>শিক্ষাগত যোগ্যতা</h2>
+            <div id="education-fields">
+                <div class="education-entry">
+                    <input type="text" class="exam-name" placeholder="পরীক্ষার নাম (যেমন: S.S.C)">
+                    <input type="text" class="board-name" placeholder="বোর্ডের নাম">
+                    <input type="text" class="passing-year" placeholder="পাশের বছর">
+                    <input type="number" class="marks-obtain" placeholder="প্রাপ্ত নম্বর">
+                    <input type="number" class="total-marks" placeholder="মোট নম্বর">
+                </div>
+            </div>
+            <button type="button" id="add-education" class="btn-secondary">আরও যোগ্যতা যোগ করুন</button>
 
-  <label>Address:</label>
-  <textarea id="address"></textarea>
+            <!-- Declaration -->
+            <h2>অন্যান্য তথ্য</h2>
+            <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" placeholder="তারিখ" required>
+            <input type="text" id="place" placeholder="স্থান" required>
 
-  <label>Mobile:</label>
-  <input type="text" id="mobile">
+            <button type="submit" class="btn-primary">পিডিএফ ডাউনলোড করুন</button>
+        </form>
+    </div>
 
-  <label>Email:</label>
-  <input type="email" id="email">
+    <!-- This is the hidden div that will be converted to PDF -->
+    <!-- It is styled to look exactly like the image provided -->
+    <div id="bio-data-output" class="hidden">
+        <div class="header">
+            <h1>BIO - DATA</h1>
+        </div>
+        <div class="content">
+            <div class="photo-box">
+                <img id="output-photo" src="" alt="User Photo">
+            </div>
 
-  <label>Education (format: Degree, School, Year):</label>
-  <textarea id="education" placeholder="Example:
-Madhyamik, ABC School, 2016
-HS, XYZ School, 2018"></textarea>
+            <div class="info-section top-info">
+                 <p><strong>RAJKUMAR GIRI</strong> <span id="output-rajkumar-name"></span></p>
+                 <p><strong>EMAIL NO :</strong> <span id="output-top-email"></span></p>
+                 <p><strong>Phone no -</strong> <span id="output-top-phone"></span></p>
+            </div>
 
-  <label>Upload Photo:</label>
-  <input type="file" id="photo" accept="image/*">
-  <img id="photo-preview" src="#" alt="Photo" style="display:none;"/>
+            <div class="info-section personal-info">
+                <h3><u>PERSONAL INFORMATION:</u></h3>
+                <table>
+                    <tr>
+                        <td><strong>NAME</strong></td>
+                        <td>: <span id="output-name"></span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>FATHER NAME</strong></td>
+                        <td>: <span id="output-father-name"></span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>DATE OF BIRTH</strong></td>
+                        <td>: <span id="output-dob"></span></td>
+                    </tr>
+                     <tr>
+                        <td><strong>ADDRESS</strong></td>
+                        <td>: <span id="output-address"></span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>CASTE</strong></td>
+                        <td>: <span id="output-caste"></span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>NATIONALITY</strong></td>
+                        <td>: INDIAN</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SEX</strong></td>
+                        <td>: <span id="output-sex"></span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>MOB NO</strong></td>
+                        <td>: <span id="output-mob-no"></span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>EMAIL ID</strong></td>
+                        <td>: <span id="output-email"></span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>LANGUAGES KNOWN</strong></td>
+                        <td>: <span id="output-languages"></span></td>
+                    </tr>
+                </table>
+            </div>
 
-  <button id="download-btn">Download PDF</button>
+            <div class="info-section education-info">
+                <h3><u>EDUCATION QUALIFICATION:</u></h3>
+                <table class="education-table">
+                    <thead>
+                        <tr>
+                            <th>EXAM NAME</th>
+                            <th>NAME OF BOARD</th>
+                            <th>PASSING OF YEAR</th>
+                            <th>MARKS OBTAIN</th>
+                            <th>TOTAL MARKS</th>
+                            <th>% OF MARKS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="output-education-body">
+                        <!-- Education rows will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
 
-  <!-- JS Libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-  <script src="script.js"></script>
+            <div class="declaration">
+                <p><strong>DECLARATION –</strong> I HEREBY DECLARE THAT THE ABOVE MENTIONED INFORMATION IS CORRECT UP TO MY KNOWLEDGE.</p>
+            </div>
+
+            <div class="footer">
+                <div class="date-place">
+                    <p><strong>DATE :</strong> <span id="output-date"></span></p>
+                    <p><strong>PLACE :</strong> <span id="output-place"></span></p>
+                </div>
+                <div class="signature">
+                    <p><strong>SIGNATURE</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CDN for jsPDF and html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+
 </body>
 </html>
