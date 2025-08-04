@@ -1,82 +1,57 @@
-document.getElementById("add-edu").addEventListener("click", () => {
-  const eduDiv = document.createElement("div");
-  eduDiv.classList.add("edu-row");
-  eduDiv.innerHTML = `
-    <input type="text" placeholder="Exam" class="exam" required />
-    <input type="text" placeholder="Board/University" class="board" required />
-    <input type="text" placeholder="Year" class="year" required />
-    <input type="text" placeholder="Percentage/CGPA" class="result" required />
-  `;
-  document.getElementById("education-list").appendChild(eduDiv);
+document.getElementById("photo").addEventListener("change", function (event) {
+  const reader = new FileReader();
+  reader.onload = function () {
+    const img = document.getElementById("photo-preview");
+    img.src = reader.result;
+    img.style.display = "block";
+    img.setAttribute("data-image", reader.result);
+  };
+  reader.readAsDataURL(event.target.files[0]);
 });
 
-document.getElementById("biodata-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
+document.getElementById("download-btn").addEventListener("click", async () => {
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+  const doc = new jsPDF({ unit: "pt", format: "a4" });
 
-  const fullName = document.getElementById("fullName").value;
-  const fatherName = document.getElementById("fatherName").value;
+  const name = document.getElementById("name").value;
+  const father = document.getElementById("father").value;
   const dob = document.getElementById("dob").value;
-  const gender = document.getElementById("gender").value;
-  const phone = document.getElementById("phone").value;
-  const email = document.getElementById("email").value;
   const address = document.getElementById("address").value;
-  const extra = document.getElementById("extra").value;
+  const mobile = document.getElementById("mobile").value;
+  const email = document.getElementById("email").value;
+  const photoData = document.getElementById("photo-preview").getAttribute("data-image");
+  const educationData = document.getElementById("education").value;
 
-  const photoInput = document.getElementById("photo");
-  let imageDataURL = null;
+  // Header with name and photo
+  doc.setFontSize(14);
+  doc.text(`Name: ${name}`, 40, 60);
+  doc.text(`Father's Name: ${father}`, 40, 80);
 
-  if (photoInput.files.length > 0) {
-    const reader = new FileReader();
-    reader.readAsDataURL(photoInput.files[0]);
-    await new Promise(resolve => {
-      reader.onload = () => {
-        imageDataURL = reader.result;
-        resolve();
-      };
+  if (photoData) {
+    doc.addImage(photoData, "JPEG", 400, 40, 100, 120);
+  }
+
+  doc.text(`Date of Birth: ${dob}`, 40, 110);
+  doc.text(`Mobile: ${mobile}`, 40, 130);
+  doc.text(`Email: ${email}`, 40, 150);
+  doc.text(`Address:`, 40, 170);
+  doc.text(address, 40, 190, { maxWidth: 500 });
+
+  // Education Table
+  const rows = educationData
+    .split("\n")
+    .filter(Boolean)
+    .map(row => row.split(",").map(cell => cell.trim()));
+
+  if (rows.length > 0) {
+    doc.autoTable({
+      head: [["Degree", "Institution", "Year"]],
+      body: rows,
+      startY: 250,
+      theme: "grid",
+      styles: { fontSize: 12, cellPadding: 6 },
     });
   }
 
-  let y = 20;
-  doc.setFontSize(18);
-  doc.text("BIODATA", 105, y, { align: "center" });
-  y += 10;
-
-  if (imageDataURL) {
-    doc.addImage(imageDataURL, "JPEG", 140, y - 10, 40, 40);
-  }
-
-  doc.setFontSize(12);
-  doc.text(`Full Name: ${fullName}`, 20, y); y += 10;
-  doc.text(`Father's Name: ${fatherName}`, 20, y); y += 10;
-  doc.text(`Date of Birth: ${dob}`, 20, y); y += 10;
-  doc.text(`Gender: ${gender}`, 20, y); y += 10;
-  doc.text(`Phone: ${phone}`, 20, y); y += 10;
-  if (email) {
-    doc.text(`Email: ${email}`, 20, y); y += 10;
-  }
-  doc.text("Address:", 20, y); y += 8;
-  const addressLines = doc.splitTextToSize(address, 160);
-  doc.text(addressLines, 25, y); y += addressLines.length * 8;
-
-  doc.text("Educational Qualification:", 20, y); y += 10;
-  const exams = document.querySelectorAll(".exam");
-  const boards = document.querySelectorAll(".board");
-  const years = document.querySelectorAll(".year");
-  const results = document.querySelectorAll(".result");
-
-  for (let i = 0; i < exams.length; i++) {
-    doc.text(`• ${exams[i].value}, ${boards[i].value}, ${years[i].value}, ${results[i].value}`, 25, y);
-    y += 8;
-  }
-
-  if (extra) {
-    doc.text("Extra Qualification:", 20, y); y += 10;
-    const extraLines = doc.splitTextToSize(extra, 160);
-    doc.text(extraLines, 25, y);
-    y += extraLines.length * 8;
-  }
-
-  doc.save(`${fullName.replace(/\s+/g, '_')}_Biodata.pdf`);
+  doc.save(`${name}_Biodata.pdf`);
 });
