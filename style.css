@@ -185,17 +185,19 @@ textarea {
 #bio-data-output .declaration {
     margin-top: 30px;
 }
-#bio-data-output #output-signature-img {
-    width: 140px;
-    height: 60px;
-    object-fit: contain; /* এটি ছবিকে বিকৃত হওয়া থেকে রক্ষা করে */
-    display: block;
-    margin-bottom: 5px;
-}
 #bio-data-output .signature {
     display: flex;
     flex-direction: column;
-    align-items: flex-end; /* Align items to the right */
+    align-items: center; /* Center align the content (image and text) */
+    float: right; /* Float the entire block to the right */
+}
+
+#bio-data-output #output-signature-img {
+    width: 140px;
+    height: 60px;
+    object-fit: contain;
+    display: block;
+    margin-bottom: 5px;
 }
 #bio-data-output .footer {
     display: flex;
