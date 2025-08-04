@@ -1,57 +1,41 @@
 body {
   font-family: Arial, sans-serif;
   background: #f4f4f4;
+  margin: 0;
   padding: 20px;
 }
 
 .container {
   background: #fff;
-  padding: 20px;
-  max-width: 800px;
+  max-width: 700px;
   margin: auto;
+  padding: 30px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-h1 {
-  text-align: center;
+form .form-group {
+  margin-bottom: 15px;
 }
 
-form fieldset {
-  border: 1px solid #ccc;
-  margin-bottom: 20px;
-  padding: 15px;
-}
-
-form legend {
+form label {
+  display: block;
+  margin-bottom: 5px;
   font-weight: bold;
 }
 
-label {
-  display: block;
-  margin: 10px 0;
-}
-
-input, select, textarea, button {
+form input,
+form textarea {
   width: 100%;
   padding: 8px;
-  margin-top: 5px;
-}
-
-.edu-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.edu-row input {
-  flex: 1;
+  box-sizing: border-box;
 }
 
 button {
+  padding: 10px 20px;
   background: #007BFF;
-  color: #fff;
   border: none;
-  margin-top: 10px;
+  color: white;
+  font-size: 16px;
   cursor: pointer;
 }
 
