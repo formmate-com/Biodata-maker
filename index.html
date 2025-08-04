@@ -3,58 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Biodata Generator</title>
-  <link rel="stylesheet" href="style.css"/>
+  <title>Biodata Maker</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <h1>Biodata Generator</h1>
-    <form id="biodataForm">
+    <form id="biodata-form">
       <fieldset>
         <legend>Personal Information</legend>
         <label>Full Name: <input type="text" id="fullName" required /></label>
-        <label>Father's Name: <input type="text" id="fatherName" /></label>
-        <label>Mother's Name: <input type="text" id="motherName" /></label>
-        <label>Sex: 
-          <select id="sex">
+        <label>Father's Name: <input type="text" id="fatherName" required /></label>
+        <label>Date of Birth: <input type="date" id="dob" required /></label>
+        <label>Gender: 
+          <select id="gender">
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>
           </select>
         </label>
-        <label>Date of Birth: <input type="date" id="dob" /></label>
-        <label>Mobile Number: <input type="text" id="mobile" /></label>
+        <label>Phone: <input type="text" id="phone" required /></label>
         <label>Email: <input type="email" id="email" /></label>
-        <label>Address: <textarea id="address"></textarea></label>
+        <label>Address: <textarea id="address" required></textarea></label>
         <label>Upload Photo: <input type="file" id="photo" accept="image/*" /></label>
       </fieldset>
 
       <fieldset>
-        <legend>Education Qualification</legend>
-        <div id="educationContainer">
-          <div class="edu">
-            <input type="text" placeholder="Exam" class="exam"/>
-            <input type="text" placeholder="Board/University" class="board"/>
-            <input type="text" placeholder="Year" class="year"/>
-            <input type="text" placeholder="Marks (%)" class="marks"/>
+        <legend>Educational Qualification</legend>
+        <div id="education-list">
+          <div class="edu-row">
+            <input type="text" placeholder="Exam" class="exam" required />
+            <input type="text" placeholder="Board/University" class="board" required />
+            <input type="text" placeholder="Year" class="year" required />
+            <input type="text" placeholder="Percentage/CGPA" class="result" required />
           </div>
         </div>
-        <button type="button" onclick="addEducation()">+ Add More</button>
+        <button type="button" id="add-edu">+ Add More</button>
       </fieldset>
 
       <fieldset>
         <legend>Extra Qualification</legend>
-        <textarea id="extraQualification" rows="4"></textarea>
+        <textarea id="extra" rows="3"></textarea>
       </fieldset>
 
-      <button type="button" onclick="generateBiodata()">Generate Biodata</button>
+      <button type="submit">Download PDF</button>
     </form>
-
-    <div id="previewContainer">
-      <h2>Preview</h2>
-      <div id="biodataPreview"></div>
-      <button id="downloadBtn" onclick="downloadPDF()">Download PDF</button>
-    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
