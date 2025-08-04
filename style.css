@@ -185,7 +185,13 @@ textarea {
 #bio-data-output .declaration {
     margin-top: 30px;
 }
-
+#bio-data-output #output-signature-img {
+    width: 140px;
+    height: 60px;
+    object-fit: contain; /* এটি ছবিকে বিকৃত হওয়া থেকে রক্ষা করে */
+    display: block;
+    margin-bottom: 5px;
+}
 #bio-data-output .footer {
     display: flex;
     justify-content: space-between;
