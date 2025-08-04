@@ -8,33 +8,51 @@
 </head>
 <body>
   <div class="container">
-    <h1>Biodata Maker</h1>
+    <h1 class="title">Biodata Generator</h1>
+
     <form id="biodataForm">
-      <input type="text" id="name" placeholder="Full Name" required />
-      <input type="text" id="father" placeholder="Father's Name" required />
-      <input type="text" id="dob" placeholder="Date of Birth" required />
-      <input type="text" id="address" placeholder="Address" required />
-      <input type="text" id="caste" placeholder="Caste" />
-      <input type="text" id="nationality" value="Indian" required />
-      <input type="text" id="sex" placeholder="Sex" required />
-      <input type="text" id="mobile" placeholder="Mobile Number" required />
-      <input type="email" id="email" placeholder="Email ID" required />
-      <input type="text" id="languages" placeholder="Languages Known" required />
-      <input type="text" id="place" placeholder="Place" required />
-      <input type="file" id="photo" accept="image/*" />
-      <h3>Education Details</h3>
-      <input type="text" id="exam" placeholder="Exam Name" />
-      <input type="text" id="board" placeholder="Board Name" />
-      <input type="text" id="year" placeholder="Passing Year" />
-      <input type="text" id="marks" placeholder="Marks Obtained" />
-      <input type="text" id="total" placeholder="Total Marks" />
-      <input type="text" id="percent" placeholder="% of Marks" />
-      <button type="submit">Download PDF</button>
+      <fieldset>
+        <legend>Personal Information</legend>
+        <label>Name: <input type="text" name="name" required /></label>
+        <label>Father's Name: <input type="text" name="father" required /></label>
+        <label>Mother's Name: <input type="text" name="mother" required /></label>
+        <label>Date of Birth: <input type="date" name="dob" required /></label>
+        <label>Sex:
+          <select name="sex" required>
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label>Address: <textarea name="address" rows="2" required></textarea></label>
+        <label>Phone: <input type="tel" name="phone" required /></label>
+        <label>Email: <input type="email" name="email" /></label>
+        <label>Upload Photo: <input type="file" name="photo" accept="image/*" /></label>
+      </fieldset>
+
+      <fieldset id="educationSection">
+        <legend>Education Qualification</legend>
+        <div class="edu-entry">
+          <label>Exam Name: <input type="text" name="exam[]" required /></label>
+          <label>Board/University: <input type="text" name="board[]" required /></label>
+          <label>Year: <input type="text" name="year[]" required /></label>
+          <label>Result: <input type="text" name="result[]" required /></label>
+        </div>
+      </fieldset>
+      <button type="button" onclick="addEducation()">+ Add Education</button>
+
+      <fieldset>
+        <legend>Extra Qualification</legend>
+        <label><textarea name="extra" rows="3" placeholder="Computer course, language skills etc."></textarea></label>
+      </fieldset>
+
+      <button type="submit">Generate Biodata</button>
     </form>
+
+    <div id="preview" class="preview-box"></div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
