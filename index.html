@@ -3,56 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Biodata Maker</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Biodata Generator</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <div class="container">
-    <h1 class="title">Biodata Generator</h1>
-
+    <h1>Biodata Generator</h1>
     <form id="biodataForm">
       <fieldset>
         <legend>Personal Information</legend>
-        <label>Name: <input type="text" name="name" required /></label>
-        <label>Father's Name: <input type="text" name="father" required /></label>
-        <label>Mother's Name: <input type="text" name="mother" required /></label>
-        <label>Date of Birth: <input type="date" name="dob" required /></label>
-        <label>Sex:
-          <select name="sex" required>
-            <option value="">Select</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
+        <label>Full Name: <input type="text" id="fullName" required /></label>
+        <label>Father's Name: <input type="text" id="fatherName" /></label>
+        <label>Mother's Name: <input type="text" id="motherName" /></label>
+        <label>Sex: 
+          <select id="sex">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
           </select>
         </label>
-        <label>Address: <textarea name="address" rows="2" required></textarea></label>
-        <label>Phone: <input type="tel" name="phone" required /></label>
-        <label>Email: <input type="email" name="email" /></label>
-        <label>Upload Photo: <input type="file" name="photo" accept="image/*" /></label>
+        <label>Date of Birth: <input type="date" id="dob" /></label>
+        <label>Mobile Number: <input type="text" id="mobile" /></label>
+        <label>Email: <input type="email" id="email" /></label>
+        <label>Address: <textarea id="address"></textarea></label>
+        <label>Upload Photo: <input type="file" id="photo" accept="image/*" /></label>
       </fieldset>
 
-      <fieldset id="educationSection">
+      <fieldset>
         <legend>Education Qualification</legend>
-        <div class="edu-entry">
-          <label>Exam Name: <input type="text" name="exam[]" required /></label>
-          <label>Board/University: <input type="text" name="board[]" required /></label>
-          <label>Year: <input type="text" name="year[]" required /></label>
-          <label>Result: <input type="text" name="result[]" required /></label>
+        <div id="educationContainer">
+          <div class="edu">
+            <input type="text" placeholder="Exam" class="exam"/>
+            <input type="text" placeholder="Board/University" class="board"/>
+            <input type="text" placeholder="Year" class="year"/>
+            <input type="text" placeholder="Marks (%)" class="marks"/>
+          </div>
         </div>
+        <button type="button" onclick="addEducation()">+ Add More</button>
       </fieldset>
-      <button type="button" onclick="addEducation()">+ Add Education</button>
 
       <fieldset>
         <legend>Extra Qualification</legend>
-        <label><textarea name="extra" rows="3" placeholder="Computer course, language skills etc."></textarea></label>
+        <textarea id="extraQualification" rows="4"></textarea>
       </fieldset>
 
-      <button type="submit">Generate Biodata</button>
+      <button type="button" onclick="generateBiodata()">Generate Biodata</button>
     </form>
 
-    <div id="preview" class="preview-box"></div>
+    <div id="previewContainer">
+      <h2>Preview</h2>
+      <div id="biodataPreview"></div>
+      <button id="downloadBtn" onclick="downloadPDF()">Download PDF</button>
+    </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
