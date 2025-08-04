@@ -1,56 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Biodata Maker</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    #photo-preview {
+      width: 100px;
+      height: 120px;
+      object-fit: cover;
+      margin-top: 10px;
+    }
+    #download-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Biodata Generator</h1>
-    <form id="biodata-form">
-      <fieldset>
-        <legend>Personal Information</legend>
-        <label>Full Name: <input type="text" id="fullName" required /></label>
-        <label>Father's Name: <input type="text" id="fatherName" required /></label>
-        <label>Date of Birth: <input type="date" id="dob" required /></label>
-        <label>Gender: 
-          <select id="gender">
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-        </label>
-        <label>Phone: <input type="text" id="phone" required /></label>
-        <label>Email: <input type="email" id="email" /></label>
-        <label>Address: <textarea id="address" required></textarea></label>
-        <label>Upload Photo: <input type="file" id="photo" accept="image/*" /></label>
-      </fieldset>
+  <h2>Biodata Maker</h2>
+  
+  <label>Full Name:</label>
+  <input type="text" id="name">
 
-      <fieldset>
-        <legend>Educational Qualification</legend>
-        <div id="education-list">
-          <div class="edu-row">
-            <input type="text" placeholder="Exam" class="exam" required />
-            <input type="text" placeholder="Board/University" class="board" required />
-            <input type="text" placeholder="Year" class="year" required />
-            <input type="text" placeholder="Percentage/CGPA" class="result" required />
-          </div>
-        </div>
-        <button type="button" id="add-edu">+ Add More</button>
-      </fieldset>
+  <label>Father's Name:</label>
+  <input type="text" id="father">
 
-      <fieldset>
-        <legend>Extra Qualification</legend>
-        <textarea id="extra" rows="3"></textarea>
-      </fieldset>
+  <label>Date of Birth:</label>
+  <input type="date" id="dob">
 
-      <button type="submit">Download PDF</button>
-    </form>
-  </div>
+  <label>Address:</label>
+  <textarea id="address"></textarea>
 
+  <label>Mobile:</label>
+  <input type="text" id="mobile">
+
+  <label>Email:</label>
+  <input type="email" id="email">
+
+  <label>Education (format: Degree, School, Year):</label>
+  <textarea id="education" placeholder="Example:
+Madhyamik, ABC School, 2016
+HS, XYZ School, 2018"></textarea>
+
+  <label>Upload Photo:</label>
+  <input type="file" id="photo" accept="image/*">
+  <img id="photo-preview" src="#" alt="Photo" style="display:none;"/>
+
+  <button id="download-btn">Download PDF</button>
+
+  <!-- JS Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
