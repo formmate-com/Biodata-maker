@@ -108,9 +108,8 @@ textarea {
 /* --- NEW & IMPROVED STYLING FOR PDF OUTPUT --- */
 #bio-data-output {
     width: 210mm;
-    min-height: 297mm;
-    height: auto;
-    padding: 15mm;
+    height: 297mm; /* Fixed height for a single A4 page */
+    padding: 15mm; /* Reduced padding to create more space */
     background: white;
     color: black;
     box-sizing: border-box;
@@ -118,37 +117,37 @@ textarea {
     font-size: 12pt;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
 .main-content {
-    flex-grow: 1;
+    flex-grow: 1; /* This will take up all available space, pushing the footer down */
 }
 
 .top-section {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    border-bottom: 2px solid black;
-    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+    padding-bottom: 8px;
+    margin-bottom: 8px; /* Space after the header */
 }
 
 #bio-data-output h1 {
     text-align: center;
-    font-size: 24pt;
+    font-size: 22pt; /* Slightly smaller to save space */
     text-decoration: underline;
-    margin: 0 0 15px 0;
+    margin: 0 0 10px 0; /* Reduced bottom margin */
     color: black;
     border: none;
 }
 
 .top-details p {
-    margin: 4px 0;
-    font-size: 12pt;
+    margin: 2px 0; /* Reduced line spacing */
+    font-size: 11pt;
 }
 
 .personal-info {
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
 .photo-box {
@@ -168,15 +167,15 @@ textarea {
 }
 
 #bio-data-output h3 {
-    font-size: 14pt;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    font-size: 13pt; /* Slightly smaller */
+    margin-top: 15px; /* Reduced top margin */
+    margin-bottom: 8px;
     color: black;
 }
 
 #bio-data-output .info-section p,
 #bio-data-output .info-section td {
-    line-height: 1.6;
+    line-height: 1.5; /* Reduced line height */
     margin: 0;
     padding: 0;
 }
@@ -191,33 +190,33 @@ textarea {
 }
 
 #bio-data-output .education-info {
-    margin-top: 25px;
+    margin-top: 15px;
 }
 
 #bio-data-output .education-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    margin-top: 8px;
     border: 1px solid black;
 }
 
 #bio-data-output .education-table th,
 #bio-data-output .education-table td {
     border: 1px solid black;
-    padding: 8px;
+    padding: 5px; /* Reduced padding */
     text-align: center;
+    font-size: 11pt;
 }
 
 #bio-data-output .declaration {
-    margin-top: 30px;
+    margin-top: 15px;
 }
 
 #bio-data-output .footer {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-top: auto;
-    padding-top: 20px;
+    padding-top: 15px; /* Space above footer */
     width: 100%;
 }
 
@@ -233,4 +232,19 @@ textarea {
     object-fit: contain;
     display: block;
     margin-bottom: 5px;
-}
+}```
+
+### **৩. `script.js` ফাইল**
+
+এই ফাইলে আপনার কোনো পরিবর্তনের প্রয়োজন নেই। এটি আগের মতোই থাকবে।
+
+---
+
+### **কেন এই সমাধানটি আপনার সমস্যার জন্য সঠিক:**
+
+1.  **Fixed A4 Height:** `#bio-data-output`-এর `height: 297mm;` দিয়ে আমরা নিশ্চিত করেছি যে কন্টেইনারটি সবসময় একটি A4 পৃষ্ঠার সমান থাকবে।
+2.  **Flexbox for Layout:** `#bio-data-output`-কে `display: flex` এবং `flex-direction: column` করা হয়েছে। এর ভেতরের `.main-content` ডিভটিকে `flex-grow: 1` দেওয়া হয়েছে। এর মানে হলো, প্রধান কন্টেন্টটি উপরের দিকে থাকবে এবং ফুটার ও তার মধ্যবর্তী সমস্ত ফাঁকা জায়গা পূরণ করবে, যার ফলে **ফুটারটি স্বাভাবিকভাবেই নিচে থাকবে**।
+3.  **Space Optimization:** আমি বিভিন্ন উপাদানের `padding`, `margin`, এবং `font-size` সামান্য কমিয়ে দিয়েছি। এর ফলে পুরো কন্টেন্টটি একটু সংকুচিত হয়েছে এবং তিনটি শিক্ষাগত যোগ্যতা যোগ করার পরেও নিচের দিকে ফুটারের জন্য যথেষ্ট জায়গা থাকছে।
+4.  **No Hacks:** আমরা কোনো নেতিবাচক মার্জিন বা অন্য কোনো "হ্যাক" ব্যবহার করিনি। এই লেআউটটি স্থিতিশীল এবং নির্ভরযোগ্য।
+
+এই কোডগুলো ব্যবহার করার পর আপনার বায়োডাটাটি সঠিকভাবে একটি A4 পৃষ্ঠার মধ্যেই সীমাবদ্ধ থাকবে।
