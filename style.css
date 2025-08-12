@@ -1,0 +1,211 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.form-container {
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 700px;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #0056b3;
+}
+
+h2 {
+    border-bottom: 2px solid #0056b3;
+    padding-bottom: 5px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+/* Form Elements Styling */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+/* Button Styling */
+.btn-primary, .btn-secondary {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Education Fields Styling */
+.education-entry {
+    border: 1px dashed #ccc;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+/* Hidden output div for PDF generation */
+.hidden {
+    display: none;
+}
+
+/* --- Styling for the PDF Output Div --- */
+#bio-data-output {
+    width: 210mm; /* A4 width */
+    height: 297mm; /* A4 height */
+    padding: 20mm;
+    background: white;
+    color: black;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 12pt;
+    border: 1px solid #ccc; /* For visualization */
+}
+
+#bio-data-output h1 {
+    text-align: center;
+    font-size: 24pt;
+    text-decoration: underline;
+    margin-bottom: 20px;
+    color: black;
+    border: none;
+}
+
+#bio-data-output h3 {
+    font-size: 14pt;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: black;
+}
+
+#bio-data-output .content {
+    position: relative;
+}
+
+#bio-data-output .photo-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 35mm;
+    height: 45mm;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#bio-data-output #output-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#bio-data-output .info-section p, #bio-data-output .info-section td {
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+#bio-data-output .personal-info table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#bio-data-output .personal-info td:first-child {
+    width: 30%;
+}
+
+#bio-data-output .education-info {
+    margin-top: 25px;
+}
+
+#bio-data-output .education-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    border: 1px solid black;
+}
+
+#bio-data-output .education-table th, #bio-data-output .education-table td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+#bio-data-output .declaration {
+    margin-top: 30px;
+}
+#bio-data-output .signature {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align the content (image and text) */
+    float: right; /* Float the entire block to the right */
+}
+
+#bio-data-output #output-signature-img {
+    width: 140px;
+    height: 60px;
+    object-fit: contain;
+    display: block;
+    margin-bottom: 5px;
+}
+#bio-data-output .footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+/* Styling for the Extra Qualification section in the output */
+#bio-data-output .extra-qualification-info {
+    margin-top: 25px; /* Adds space above the section */
+}
