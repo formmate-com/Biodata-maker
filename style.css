@@ -188,8 +188,7 @@ textarea {
 #bio-data-output .signature {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center align the content (image and text) */
-    float: right; /* Float the entire block to the right */
+    align-items: center;
 }
 
 #bio-data-output #output-signature-img {
@@ -201,8 +200,11 @@ textarea {
 }
 #bio-data-output .footer {
     display: flex;
-    justify-content: space-between;
-    margin-top: 50px;
+    justify-content: space-between; /* Pushes items apart */
+    align-items: flex-end;
+    margin-top: auto;
+    padding-top: 20px;
+    width: 100%;
 }
 
 /* Styling for the Extra Qualification section in the output */
