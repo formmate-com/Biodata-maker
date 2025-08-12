@@ -94,9 +94,15 @@ textarea {
     border-radius: 5px;
 }
 
-/* Hidden output div for PDF generation */
+/* --- CORRECTED STYLES TO PROPERLY HIDE THE PREVIEW --- */
 .hidden {
-    display: none;
+    position: absolute !important;
+    left: -9999px !important;
+    top: auto !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
 }
 
 /* --- NEW & IMPROVED STYLING FOR PDF OUTPUT --- */
@@ -110,7 +116,6 @@ textarea {
     box-sizing: border-box;
     font-family: 'Times New Roman', Times, serif;
     font-size: 12pt;
-    border: 1px solid #ccc;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -128,7 +133,7 @@ textarea {
     padding-bottom: 10px;
 }
 
-.header-text h1 {
+#bio-data-output h1 {
     text-align: center;
     font-size: 24pt;
     text-decoration: underline;
@@ -211,8 +216,8 @@ textarea {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-top: auto; /* Pushes footer to the bottom */
-    padding-top: 20px; /* Space above footer */
+    margin-top: auto;
+    padding-top: 20px;
     width: 100%;
 }
 
