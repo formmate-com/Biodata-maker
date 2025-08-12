@@ -99,31 +99,67 @@ textarea {
     display: none;
 }
 
-/* --- Styling for the PDF Output Div --- */
+/* --- NEW & IMPROVED STYLING FOR PDF OUTPUT --- */
 #bio-data-output {
     width: 210mm;
     min-height: 297mm;
     height: auto;
-    padding: 20mm;
+    padding: 15mm;
     background: white;
     color: black;
     box-sizing: border-box;
     font-family: 'Times New Roman', Times, serif;
     font-size: 12pt;
-    border: 1px solid #ccc; /* For visualization */
-    
-    /* --- ADJUST THIS VALUE TO MOVE THE CONTENT UP --- */
-    /* Try a more negative value to reduce the top gap further */
-    margin-top: -25mm; /* Changed from -15mm to -25mm */
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-#bio-data-output h1 {
+.main-content {
+    flex-grow: 1;
+}
+
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid black;
+    padding-bottom: 10px;
+}
+
+.header-text h1 {
     text-align: center;
     font-size: 24pt;
     text-decoration: underline;
-    margin-bottom: 20px;
+    margin: 0 0 15px 0;
     color: black;
     border: none;
+}
+
+.top-details p {
+    margin: 4px 0;
+    font-size: 12pt;
+}
+
+.personal-info {
+    margin-top: 15px;
+}
+
+.photo-box {
+    width: 35mm;
+    height: 45mm;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+#output-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 #bio-data-output h3 {
@@ -133,29 +169,8 @@ textarea {
     color: black;
 }
 
-#bio-data-output .content {
-    position: relative;
-}
-
-#bio-data-output .photo-box {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 35mm;
-    height: 45mm;
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#bio-data-output #output-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-#bio-data-output .info-section p, #bio-data-output .info-section td {
+#bio-data-output .info-section p,
+#bio-data-output .info-section td {
     line-height: 1.6;
     margin: 0;
     padding: 0;
@@ -181,7 +196,8 @@ textarea {
     border: 1px solid black;
 }
 
-#bio-data-output .education-table th, #bio-data-output .education-table td {
+#bio-data-output .education-table th,
+#bio-data-output .education-table td {
     border: 1px solid black;
     padding: 8px;
     text-align: center;
@@ -190,11 +206,20 @@ textarea {
 #bio-data-output .declaration {
     margin-top: 30px;
 }
+
+#bio-data-output .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto; /* Pushes footer to the bottom */
+    padding-top: 20px; /* Space above footer */
+    width: 100%;
+}
+
 #bio-data-output .signature {
     display: flex;
     flex-direction: column;
-    align-items: Center; /* Center align the content (image and text) */
-    float: right; /* Float the entire block to the right */
+    align-items: center;
 }
 
 #bio-data-output #output-signature-img {
@@ -204,26 +229,3 @@ textarea {
     display: block;
     margin-bottom: 5px;
 }
-#bio-data-output .footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 50px;
-}
-
-/* --- Styling for the Footer Section (Date, Place, Signature) --- */
-
-/* This targets the entire footer area in the PDF output */
-#bio-data-output .footer {
-    display: flex;
-    justify-content: space-between; /* Pushes Date/Place to the left and Signature to the right */
-    align-items: flex-end;        /* Aligns both items to the bottom edge */
-    margin-top: 50px;             /* Adds some space above the footer */
-    width: 100%;                  /* Ensures the footer takes the full width */
-}
-
-/* This targets ONLY the signature block on the right side */
-#bio-data-output .signature {
-    display: flex;
-    flex-direction: column;    /* Stacks the signature image and the text vertically */
-    align-items: center;       /* Centers the image and the "SIGNATURE" text horizontally */
-    }
