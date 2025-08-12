@@ -10,20 +10,29 @@ document.addEventListener('DOMContentLoaded', () => {
         ).join(' ');
     }
     
-    // Add more education fields
-    document.getElementById('add-education').addEventListener('click', () => {
-        const educationFields = document.getElementById('education-fields');
-        const newEntry = document.createElement('div');
-        newEntry.classList.add('education-entry');
-        newEntry.innerHTML = `
-            <input type="text" class="exam-name" placeholder="Exam Name">
-            <input type="text" class="board-name" placeholder="Name of Board">
-            <input type="text" class="passing-year" placeholder="Passing Year">
-            <input type="number" class="marks-obtain" placeholder="Marks Obtained">
-            <input type="number" class="total-marks" placeholder="Total Marks">
-        `;
-        educationFields.appendChild(newEntry);
-    });
+    // Add more education fields with a limit of 3 entries
+document.getElementById('add-education').addEventListener('click', () => {
+    const educationFields = document.getElementById('education-fields');
+    const existingEntries = educationFields.getElementsByClassName('education-entry').length;
+
+    // --- NEW: Check if the limit has been reached ---
+    if (existingEntries >= 3) {
+        alert("You can add a maximum of 3 qualifications.");
+        return; // Stop the function from adding more fields
+    }
+
+    // If limit is not reached, create and add the new entry
+    const newEntry = document.createElement('div');
+    newEntry.classList.add('education-entry');
+    newEntry.innerHTML = `
+        <input type="text" class="exam-name" placeholder="Exam Name (e.g., High School)">
+        <input type="text" class="board-name" placeholder="Name of Board">
+        <input type="text" class="passing-year" placeholder="Passing Year">
+        <input type="number" class="marks-obtain" placeholder="Marks Obtained">
+        <input type="number" class="total-marks" placeholder="Total Marks">
+    `;
+    educationFields.appendChild(newEntry);
+});
 
     const form = document.getElementById('bio-data-form');
     form.addEventListener('submit', async (event) => {
