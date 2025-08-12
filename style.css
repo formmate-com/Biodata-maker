@@ -188,7 +188,7 @@ textarea {
 #bio-data-output .signature {
     display: flex;
     flex-direction: column;
-    align-items: flex-end; /* Center align the content (image and text) */
+    align-items: Center; /* Center align the content (image and text) */
     float: right; /* Float the entire block to the right */
 }
 
@@ -212,7 +212,7 @@ textarea {
     display: flex;
     justify-content: space-between; /* Pushes Date/Place to the left and Signature to the right */
     align-items: flex-end;        /* Aligns both items to the bottom edge */
-    margin-top: 60px;             /* Adds some space above the footer */
+    margin-top: 50px;             /* Adds some space above the footer */
     width: 100%;                  /* Ensures the footer takes the full width */
 }
 
