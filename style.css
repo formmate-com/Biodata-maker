@@ -205,7 +205,20 @@ textarea {
     margin-top: 50px;
 }
 
-/* Styling for the Extra Qualification section in the output */
-#bio-data-output .extra-qualification-info {
-    margin-top: 25px; /* Adds space above the section */
+/* --- Styling for the Footer Section (Date, Place, Signature) --- */
+
+/* This targets the entire footer area in the PDF output */
+#bio-data-output .footer {
+    display: flex;
+    justify-content: space-between; /* Pushes Date/Place to the left and Signature to the right */
+    align-items: flex-end;        /* Aligns both items to the bottom edge */
+    margin-top: 60px;             /* Adds some space above the footer */
+    width: 100%;                  /* Ensures the footer takes the full width */
 }
+
+/* This targets ONLY the signature block on the right side */
+#bio-data-output .signature {
+    display: flex;
+    flex-direction: column;    /* Stacks the signature image and the text vertically */
+    align-items: center;       /* Centers the image and the "SIGNATURE" text horizontally */
+    }
