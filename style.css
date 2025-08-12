@@ -101,8 +101,8 @@ textarea {
 
 /* --- Styling for the PDF Output Div --- */
 #bio-data-output {
-    width: 210mm; /* A4 width */
-    height: 297mm; /* A4 height */
+    width: 210mm;          /* A4 width */
+    height: 297mm;         /* A4 height */
     padding: 20mm;
     background: white;
     color: black;
@@ -110,6 +110,9 @@ textarea {
     font-family: 'Times New Roman', Times, serif;
     font-size: 12pt;
     border: 1px solid #ccc; /* For visualization */
+    
+    /* --- NEW: Add this line to remove the top gap --- */
+    margin-top: -15mm;
 }
 
 #bio-data-output h1 {
